@@ -15,17 +15,18 @@
     <style>
       body {
         font-family: "Tajawal", sans-serif;
-        background-color: #f1f5f9;
+        background-color: #f8fafc;
         color: #0f172a;
       }
       .stat-card {
         background: #ffffff;
-        border-radius: 1rem;
+        border-radius: 0.75rem;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
       }
       .ticket-card {
         background: #ffffff;
-        border-radius: 1rem;
+        border-radius: 0.75rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
         border: 1px solid #e2e8f0;
       }
@@ -43,6 +44,9 @@
         display: inline-block;
         cursor: pointer;
       }
+      select {
+        background-image: none;
+      }
     </style>
   </head>
   <body class="antialiased">
@@ -51,10 +55,10 @@
       class="fixed inset-0 bg-white/80 z-50 hidden flex-col items-center justify-center backdrop-blur-sm"
     >
       <div
-        class="w-10 h-10 border-4 border-slate-200 border-t-blue-600 rounded-full animate-spin mb-3"
+        class="w-8 h-8 border-2 border-slate-200 border-t-emerald-700 rounded-full animate-spin mb-3"
       ></div>
-      <p id="loaderText" class="font-bold text-blue-700">
-        جاري التحديث والربط الذكي...
+      <p id="loaderText" class="font-bold text-emerald-800 text-sm">
+        جاري التحديث...
       </p>
     </div>
 
@@ -69,7 +73,7 @@
       onclick="closeModal()"
     >
       <button
-        class="absolute top-6 right-6 bg-white/10 hover:bg-white/20 text-white rounded-full w-12 h-12 flex items-center justify-center transition backdrop-blur"
+        class="absolute top-6 right-6 bg-white/10 hover:bg-white/20 text-white rounded-full w-10 h-10 flex items-center justify-center transition backdrop-blur"
       >
         ✕
       </button>
@@ -83,14 +87,19 @@
     <header
       class="bg-white py-5 px-5 sticky top-0 z-40 border-b border-slate-200 shadow-sm flex justify-between items-center"
     >
-      <h1 class="text-xl font-extrabold text-slate-800">
-        بوابة الإشراف والمتابعة
-      </h1>
+      <div>
+        <h1 class="text-lg font-extrabold text-slate-800">
+          بوابة الإشراف والمتابعة
+        </h1>
+        <p class="text-xs text-slate-500 font-medium">بلدية نابلس</p>
+      </div>
       <span
-        class="text-xs bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg font-bold flex items-center gap-2"
+        class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-100 px-3 py-1.5 rounded-md font-bold flex items-center gap-2"
       >
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span
-        >مباشر
+        <span
+          class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"
+        ></span
+        >متصل
       </span>
     </header>
 
@@ -98,10 +107,12 @@
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <div class="stat-card p-5 flex items-center justify-between">
           <div>
-            <p class="text-slate-500 text-sm font-bold">إجمالي الطلبات</p>
+            <p class="text-slate-500 text-xs font-bold uppercase tracking-wide">
+              إجمالي الطلبات
+            </p>
             <p
               id="totalCount"
-              class="text-3xl font-extrabold text-slate-800 mt-1"
+              class="text-2xl font-extrabold text-slate-800 mt-1"
             >
               —
             </p>
@@ -109,10 +120,12 @@
         </div>
         <div class="stat-card p-5 flex items-center justify-between">
           <div>
-            <p class="text-slate-500 text-sm font-bold">طلبات جديدة</p>
+            <p class="text-slate-500 text-xs font-bold uppercase tracking-wide">
+              طلبات جديدة
+            </p>
             <p
               id="newCount"
-              class="text-3xl font-extrabold text-amber-500 mt-1"
+              class="text-2xl font-extrabold text-emerald-600 mt-1"
             >
               —
             </p>
@@ -120,10 +133,12 @@
         </div>
         <div class="stat-card p-5 flex items-center justify-between">
           <div>
-            <p class="text-slate-500 text-sm font-bold">طلبات مكتملة</p>
+            <p class="text-slate-500 text-xs font-bold uppercase tracking-wide">
+              طلبات مكتملة
+            </p>
             <p
               id="completedCount"
-              class="text-3xl font-extrabold text-emerald-500 mt-1"
+              class="text-2xl font-extrabold text-slate-800 mt-1"
             >
               —
             </p>
@@ -134,7 +149,7 @@
       <div class="mb-6 flex flex-col sm:flex-row gap-3">
         <select
           id="filterSelect"
-          class="border-0 ring-1 ring-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold focus:ring-2 focus:ring-blue-500 bg-white w-full sm:w-1/3 shadow-sm outline-none"
+          class="border border-slate-200 rounded-lg px-4 py-3 text-sm font-bold focus:border-emerald-600 bg-white w-full sm:w-1/3 outline-none"
         >
           <option value="الكل">كافة التصنيفات</option>
           <option value="طرق">طرق</option>
@@ -146,14 +161,14 @@
         <input
           id="searchInput"
           type="text"
-          placeholder="ابحث بالرقم المرجعي أو رقم الهاتف..."
-          class="border-0 ring-1 ring-slate-200 rounded-xl px-4 py-3.5 text-sm font-medium focus:ring-2 focus:ring-blue-500 w-full sm:w-2/3 shadow-sm outline-none bg-white"
+          placeholder="ابحث برمز المتابعة أو رقم الهاتف..."
+          class="border border-slate-200 rounded-lg px-4 py-3 text-sm font-medium focus:border-emerald-600 w-full sm:w-2/3 outline-none bg-white"
         />
       </div>
 
-      <div id="cardsContainer" class="flex flex-col gap-5">
-        <div class="text-center py-16 font-bold text-slate-500">
-          جاري الاتصال بقاعدة البيانات...
+      <div id="cardsContainer" class="flex flex-col gap-4">
+        <div class="text-center py-16 text-sm font-bold text-slate-400">
+          جاري الاتصال...
         </div>
       </div>
     </main>
@@ -166,6 +181,7 @@
         onSnapshot,
         doc,
         updateDoc,
+        deleteDoc,
         query,
         orderBy,
         serverTimestamp,
@@ -203,7 +219,7 @@
         },
         (error) => {
           document.getElementById("cardsContainer").innerHTML =
-            '<div class="text-center bg-red-50 text-red-600 rounded-xl p-5 font-bold">تعذر الاتصال بقاعدة البيانات</div>';
+            '<div class="text-center bg-red-50 text-red-600 rounded-lg p-5 text-sm font-bold">تعذر الاتصال بقاعدة البيانات</div>';
         },
       );
 
@@ -257,7 +273,7 @@
       window.handleRepairImageSelect = function (inputElement, ticketId) {
         const fileNameSpan = document.getElementById(`fileName-${ticketId}`);
         if (inputElement.files && inputElement.files[0]) {
-          fileNameSpan.textContent = "صورة جاهزة للإرفاق ✓";
+          fileNameSpan.textContent = "تم إرفاق الصورة";
           fileNameSpan.classList.add("text-emerald-600");
         } else {
           fileNameSpan.textContent = "";
@@ -265,8 +281,26 @@
         }
       };
 
+      // دالة الحذف الجديدة
+      window.deleteComplaint = async function (ticketId) {
+        if (
+          confirm(
+            "هل أنت متأكد من حذف هذا الطلب نهائياً؟ لا يمكن التراجع عن هذا الإجراء.",
+          )
+        ) {
+          showLoader();
+          try {
+            await deleteDoc(doc(db, "complaints", ticketId));
+            hideLoader();
+            showToast("تم حذف الطلب بنجاح", "success");
+          } catch (err) {
+            hideLoader();
+            showToast("حدث خطأ أثناء الحذف", "error");
+          }
+        }
+      };
+
       window.processUpdate = async function (ticketId) {
-        // البحث عن التذكرة الحالية في المصفوفة المجلوبة
         const currentTicket = allComplaints.find(
           (c) => c.ticketId === ticketId,
         );
@@ -303,12 +337,8 @@
             }
           }
 
-          // ===============================================
-          // نظام الربط الذكي عبر رقم الهاتف (Smart Linking)
-          // ===============================================
           let targetChatId = currentTicket.telegramChatId;
 
-          // إذا لم يقم المواطن بربط هذه الشكوى تحديداً، نبحث عن أي شكوى أخرى بنفس رقم الهاتف مربوطة بتيليجرام!
           if (
             !targetChatId ||
             targetChatId === "null" ||
@@ -332,12 +362,10 @@
           };
           if (repairImageUrl) updateData.repairImage = repairImageUrl;
 
-          // حفظ الـ Chat ID في هذه التذكرة لضمان ارتباطها المستقبلي الدائم
           if (targetChatId) updateData.telegramChatId = targetChatId;
 
           await updateDoc(doc(db, "complaints", ticketId), updateData);
 
-          // إرسال الإشعار المخصص
           if (
             targetChatId &&
             targetChatId !== "undefined" &&
@@ -346,7 +374,7 @@
             const shortDesc = currentTicket.description
               ? currentTicket.description.substring(0, 35) + "..."
               : "بدون تفاصيل";
-            const msg = `📢 **تحديث على طلبك**\n\n📌 **التصنيف:** ${currentTicket.type}\n📝 **الوصف:** ${shortDesc}\n🔢 **الرقم المرجعي:** ${ticketId}\n\n✅ **الرد الإداري:** ${statusValue}`;
+            const msg = `تحديث على طلبك\n\nالتصنيف: ${currentTicket.type}\nالوصف: ${shortDesc}\nالرقم المرجعي: ${ticketId}\n\nالرد الإداري: ${statusValue}`;
 
             if (repairImageUrl) {
               await fetch(
@@ -358,7 +386,6 @@
                     chat_id: targetChatId,
                     photo: repairImageUrl,
                     caption: msg,
-                    parse_mode: "Markdown",
                   }),
                 },
               );
@@ -368,11 +395,7 @@
                 {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    chat_id: targetChatId,
-                    text: msg,
-                    parse_mode: "Markdown",
-                  }),
+                  body: JSON.stringify({ chat_id: targetChatId, text: msg }),
                 },
               );
             }
@@ -386,21 +409,11 @@
         }
       };
 
-      const getStatusColor = (status) => {
-        if (status?.includes("مكتملة"))
-          return "text-emerald-600 bg-emerald-50 border-emerald-200";
-        if (status?.includes("مرفوضة"))
-          return "text-red-600 bg-red-50 border-red-200";
-        if (status?.includes("جديدة"))
-          return "text-slate-600 bg-slate-50 border-slate-200";
-        return "text-blue-600 bg-blue-50 border-blue-200";
-      };
-
       function renderCards(complaints) {
         const container = document.getElementById("cardsContainer");
         if (complaints.length === 0) {
           container.innerHTML =
-            '<div class="text-center py-10 font-bold text-slate-400 border border-slate-200 rounded-xl">لا توجد بيانات</div>';
+            '<div class="text-center py-10 text-sm font-medium text-slate-400 border border-slate-200 rounded-lg">لا توجد بيانات</div>';
           return;
         }
 
@@ -423,10 +436,10 @@
             if (images.length > 0) {
               const extra =
                 images.length > 1
-                  ? `<div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center text-white font-extrabold text-sm backdrop-blur-sm">+${images.length - 1}</div>`
+                  ? `<div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">+${images.length - 1}</div>`
                   : "";
               imagesHtml = `
-            <div class="relative w-full sm:w-40 h-48 sm:h-full flex-shrink-0 cursor-pointer overflow-hidden border-b sm:border-b-0 sm:border-l border-slate-100" onclick="openModal('${images.join(",")}')">
+            <div class="relative w-full sm:w-32 h-40 sm:h-full flex-shrink-0 cursor-pointer overflow-hidden border-b sm:border-b-0 sm:border-l border-slate-100" onclick="openModal('${images.join(",")}')">
               <img src="${images[0]}" class="w-full h-full object-cover" />${extra}
             </div>`;
             }
@@ -435,19 +448,18 @@
             if (c.location) {
               if (c.location.manual)
                 locElements.push(
-                  `<span class="text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md font-medium text-xs border border-slate-200">الموقع: ${c.location.manual}</span>`,
+                  `<span class="text-slate-600 bg-slate-50 px-2 py-1 rounded text-xs border border-slate-100">الموقع: ${c.location.manual}</span>`,
                 );
               if (c.location.mapUrl)
                 locElements.push(
-                  `<a href="${c.location.mapUrl}" target="_blank" class="text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md font-bold text-xs hover:bg-blue-100 border border-blue-100">الخريطة</a>`,
+                  `<a href="${c.location.mapUrl}" target="_blank" class="text-emerald-700 bg-emerald-50 px-2 py-1 rounded font-bold text-xs hover:bg-emerald-100 border border-emerald-100 transition-colors">الخريطة</a>`,
                 );
             }
 
             const repairImageBadge = c.repairImage
-              ? `<span class="mt-2 inline-block text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded font-bold cursor-pointer hover:bg-emerald-200 border border-emerald-200" onclick="openModal('${c.repairImage}')">📷 عرض المرفق الإداري</span>`
+              ? `<span class="mt-2 inline-block text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold cursor-pointer hover:bg-slate-200 border border-slate-200 transition-colors" onclick="openModal('${c.repairImage}')">عرض مرفق التحديث</span>`
               : "";
 
-            // إظهار إشارة إذا كان الحساب مربوط بتيليجرام سواء بشكل مباشر أو ذكي عبر الهاتف
             const hasTelegram =
               (c.telegramChatId && c.telegramChatId !== "null") ||
               allComplaints.some(
@@ -457,7 +469,7 @@
                   other.telegramChatId !== "null",
               );
             const telegramBadge = hasTelegram
-              ? `<span class="text-[10px] bg-[#0088cc] text-white px-1.5 py-0.5 rounded ml-2">مربوط بتيليجرام</span>`
+              ? `<span class="text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded ml-2">مربوط بالتيليجرام</span>`
               : "";
 
             return `
@@ -465,31 +477,33 @@
             ${imagesHtml}
             <div class="p-5 flex-1 flex flex-col justify-between">
               <div>
-                <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
-                  <div class="flex items-center gap-2">
-                    <span class="bg-slate-800 text-white px-2 py-1 text-xs font-extrabold rounded dir-ltr tracking-wider">${c.ticketId}</span>
-                    <span class="bg-blue-50 text-blue-700 border border-blue-100 px-2 py-1 rounded text-xs font-bold">${c.type}</span>
+                <div class="flex flex-wrap justify-between items-start mb-3 gap-2">
+                  <div class="flex flex-col gap-1">
+                    <div class="flex items-center gap-2">
+                      <span class="text-slate-800 font-extrabold text-sm dir-ltr tracking-wider">${c.ticketId}</span>
+                      <span class="text-emerald-700 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">${c.type}</span>
+                    </div>
+                    <div class="flex items-center mt-1">
+                      ${telegramBadge}
+                      <span class="text-xs text-slate-400 font-medium">${date}</span>
+                    </div>
                   </div>
-                  <div class="flex items-center">
-                    ${telegramBadge}
-                    <span class="text-xs font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">${date}</span>
-                  </div>
+                  <div class="text-xs font-bold text-slate-600 dir-ltr" style="direction:ltr; text-align:right;">${c.phone}</div>
                 </div>
-                <div class="text-xs font-extrabold text-slate-500 mb-1 dir-ltr" style="direction:ltr; text-align:right;">📞 ${c.phone}</div>
-                <p class="text-slate-700 text-sm leading-relaxed mb-1 font-medium">${c.description || "لا يوجد تفاصيل"}</p>
+                <p class="text-slate-700 text-sm leading-relaxed mb-1">${c.description || "لا يوجد تفاصيل"}</p>
                 ${repairImageBadge}
               </div>
               
               <div class="mt-4 pt-4 border-t border-slate-100 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                 <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">${locElements.join("")}</div>
                 
-                <div class="flex flex-wrap items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200 w-full lg:w-auto">
-                   <div class="text-xs font-bold flex items-center gap-1 ${getStatusColor(c.status)} rounded px-2 py-1.5 w-full sm:w-auto text-center justify-center">
+                <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                   <div class="text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded px-2 py-1.5 w-full sm:w-auto text-center">
                       الحالة: ${c.status || "جديدة"}
                    </div>
                    
                    <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                       <select id="statusSelect-${c.ticketId}" onchange="toggleCustomStatus('${c.ticketId}')" class="text-xs border border-slate-300 rounded-md px-2 py-1.5 font-bold outline-none bg-white w-full sm:w-auto">
+                       <select id="statusSelect-${c.ticketId}" onchange="toggleCustomStatus('${c.ticketId}')" class="text-xs border border-slate-200 rounded px-2 py-1.5 font-bold outline-none bg-white w-full sm:w-auto focus:border-emerald-600">
                           <option value="قيد المراجعة الفنية">قيد المراجعة الفنية</option>
                           <option value="قيد الكشف الميداني">قيد الكشف الميداني</option>
                           <option value="تم التحويل للقسم المختص">تم التحويل للقسم المختص</option>
@@ -497,19 +511,24 @@
                           <option value="جاري العمل والتنفيذ">جاري العمل والتنفيذ</option>
                           <option value="تم الإنجاز والمتابعة (مكتملة)">تم الإنجاز (مكتملة)</option>
                           <option value="مرفوضة لعدم الاختصاص">مرفوضة لعدم الاختصاص</option>
-                          <option value="custom">✍️ إدخال حالة مخصصة...</option>
+                          <option value="custom">إدخال حالة مخصصة...</option>
                        </select>
-                       <input type="text" id="customStatus-${c.ticketId}" placeholder="اكتب الحالة هنا..." class="hidden text-xs border border-slate-300 rounded-md px-2 py-1.5 font-bold outline-none bg-white w-full sm:w-40" />
+                       <input type="text" id="customStatus-${c.ticketId}" placeholder="اكتب الحالة..." class="hidden text-xs border border-slate-200 rounded px-2 py-1.5 font-bold outline-none bg-white w-full sm:w-40 focus:border-emerald-600" />
                    </div>
 
-                   <label class="custom-file-upload text-xs font-bold text-slate-500 bg-white border border-slate-300 px-2 py-1.5 rounded-md hover:bg-slate-100 transition flex items-center justify-center gap-1 w-full sm:w-auto">
+                   <label class="custom-file-upload text-xs font-bold text-emerald-700 bg-white border border-emerald-200 px-2 py-1.5 rounded hover:bg-emerald-50 transition text-center w-full sm:w-auto">
                       <input type="file" id="repairImage-${c.ticketId}" class="hidden" accept="image/*" onchange="handleRepairImageSelect(this, '${c.ticketId}')" />
-                      📷 إرفاق صورة
+                      إرفاق صورة
                    </label>
                    
-                   <button onclick="processUpdate('${c.ticketId}')" class="bg-blue-600 text-white hover:bg-blue-700 px-3 py-1.5 rounded-md text-xs font-bold transition shadow-sm w-full sm:w-auto">
-                      تحديث الحالة
-                   </button>
+                   <div class="flex gap-2 w-full sm:w-auto">
+                     <button onclick="processUpdate('${c.ticketId}')" class="flex-1 sm:flex-none bg-emerald-700 text-white hover:bg-emerald-800 px-4 py-1.5 rounded text-xs font-bold transition">
+                        تحديث
+                     </button>
+                     <button onclick="deleteComplaint('${c.ticketId}')" class="flex-1 sm:flex-none bg-white text-red-600 border border-red-200 hover:bg-red-50 px-3 py-1.5 rounded text-xs font-bold transition">
+                        حذف
+                     </button>
+                   </div>
                    <div id="fileName-${c.ticketId}" class="w-full text-[10px] font-bold text-center mt-1 sm:hidden"></div>
                 </div>
               </div>
@@ -525,7 +544,7 @@
           .split(",")
           .map(
             (url) =>
-              `<img src="${url}" class="w-full bg-white rounded-xl shadow-sm border border-slate-200" />`,
+              `<img src="${url}" class="w-full bg-white rounded-lg shadow-sm border border-slate-200" />`,
           )
           .join("");
         document.getElementById("imageModal").style.display = "flex";
@@ -546,12 +565,12 @@
 
       window.showToast = function (message, type) {
         const colors = {
-          success: "bg-emerald-600",
-          error: "bg-red-500",
-          warning: "bg-amber-500",
+          success: "bg-emerald-700",
+          error: "bg-red-600",
+          warning: "bg-amber-600",
         };
         const toast = document.createElement("div");
-        toast.className = `pointer-events-auto ${colors[type]} text-white rounded-xl px-4 py-3 shadow-lg text-xs font-bold text-center`;
+        toast.className = `pointer-events-auto ${colors[type]} text-white rounded px-4 py-3 shadow-md text-xs font-bold text-center`;
         toast.textContent = message;
         document.getElementById("toastContainer").appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
