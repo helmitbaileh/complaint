@@ -2,94 +2,787 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>بلدية نابلس | منصة الشكاوى</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>منصة الشكاوى | بلدية نابلس</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      body { font-family: "Tajawal", sans-serif; background-color: #f8fafc; color: #0f172a; -webkit-tap-highlight-color: transparent; }
-      .app-header { background-color: #064e3b; padding-bottom: 3.5rem; } /* أخضر زمردي داكن */
-      .glass-card { background: #ffffff; border-radius: 1rem; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08); border: 1px solid #f1f5f9; }
-      .form-input { border: 1px solid #cbd5e1; border-radius: 0.5rem; padding: 0.875rem 1rem; width: 100%; transition: all 0.2s ease; background-color: #f8fafc; color: #334155; font-weight: 500;}
-      .form-input:focus { outline: none; border-color: #047857; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1); }
-      .btn-primary { background-color: #047857; color: white; padding: 1rem 1.5rem; border-radius: 0.5rem; font-weight: 700; width: 100%; transition: all 0.2s; }
-      .btn-primary:hover { background-color: #065f46; }
+      :root {
+        --ink: #0d1117;
+        --ink-soft: #3d4451;
+        --ink-faint: #8892a4;
+        --paper: #f7f6f3;
+        --paper-warm: #eeebe4;
+        --accent: #1a4a6b;
+        --accent-mid: #2d6e9e;
+        --accent-light: #d8eaf5;
+        --gold: #b8860b;
+        --gold-light: #f5edd0;
+        --green: #1d6a47;
+        --green-light: #d1eedf;
+        --red: #8b1a1a;
+        --red-light: #fde8e8;
+        --border: rgba(13, 17, 23, 0.1);
+        --shadow-sm: 0 1px 4px rgba(13, 17, 23, 0.07);
+        --shadow-md: 0 4px 16px rgba(13, 17, 23, 0.09);
+        --shadow-lg: 0 12px 40px rgba(13, 17, 23, 0.12);
+        --radius: 4px;
+        --radius-lg: 8px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "IBM Plex Sans Arabic", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        min-height: 100vh;
+        font-size: 15px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+      .site-header {
+        background: var(--accent);
+        color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 3px solid var(--gold);
+      }
+      .header-inner {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .header-emblem {
+        width: 38px;
+        height: 38px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1.5px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .header-title {
+        font-size: 17px;
+        font-weight: 700;
+      }
+      .header-subtitle {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 1px;
+      }
+      .main-wrap {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 32px 20px 60px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+      }
+      .card-head {
+        padding: 22px 26px 18px;
+        border-bottom: 1px solid var(--border);
+        background: #fafaf9;
+      }
+      .card-head h2 {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .card-head p {
+        font-size: 13px;
+        color: var(--ink-faint);
+        margin-top: 3px;
+      }
+      .card-body {
+        padding: 28px 26px;
+      }
+      .field {
+        margin-bottom: 22px;
+      }
+      label {
+        display: block;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--ink-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 7px;
+      }
+      input[type="tel"],
+      input[type="text"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px 14px;
+        font-family: inherit;
+        font-size: 14.5px;
+        color: var(--ink);
+        background: var(--paper);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        outline: none;
+        transition:
+          border-color 0.18s,
+          box-shadow 0.18s,
+          background 0.18s;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+      input[type="tel"]:focus,
+      input[type="text"]:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--accent-mid);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(45, 110, 158, 0.12);
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: var(--ink-faint);
+      }
+      textarea {
+        resize: none;
+        line-height: 1.6;
+      }
+      .select-wrap {
+        position: relative;
+      }
+      .select-wrap::after {
+        content: "";
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+        border-top: 6px solid var(--ink-faint);
+        pointer-events: none;
+      }
+      .select-wrap select {
+        padding-left: 34px;
+      }
+      .field-hint {
+        font-size: 12px;
+        color: var(--ink-faint);
+        margin-top: 6px;
+      }
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 26px 0;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 20px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: var(--radius);
+        border: none;
+        cursor: pointer;
+        transition: all 0.18s;
+        text-decoration: none;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        width: 100%;
+        padding: 14px;
+        font-size: 15px;
+        font-weight: 700;
+        box-shadow: 0 2px 8px rgba(26, 74, 107, 0.25);
+      }
+      .btn-primary:hover {
+        background: #163d58;
+      }
+      .btn-primary:active {
+        transform: translateY(1px);
+      }
+      .btn-ghost {
+        background: var(--paper-warm);
+        color: var(--ink-soft);
+        border: 1.5px solid var(--border);
+        width: 100%;
+      }
+      .btn-ghost:hover {
+        background: #e5e1d8;
+      }
+      .location-success {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        background: var(--green-light);
+        border: 1px solid rgba(29, 106, 71, 0.2);
+        border-radius: var(--radius);
+        color: var(--green);
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+      .location-success.visible {
+        display: flex;
+      }
+      .location-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--green);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .upload-zone {
+        border: 1.5px dashed rgba(13, 17, 23, 0.2);
+        border-radius: var(--radius);
+        padding: 28px 20px;
+        text-align: center;
+        background: var(--paper);
+        cursor: pointer;
+        transition: all 0.18s;
+        position: relative;
+      }
+      .upload-zone input {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 2;
+      }
+      .upload-zone:hover {
+        border-color: var(--accent-mid);
+        background: var(--accent-light);
+      }
+      .upload-zone.dragover {
+        border-color: var(--accent);
+        background: var(--accent-light);
+      }
+      .upload-icon {
+        width: 36px;
+        height: 36px;
+        margin: 0 auto 10px;
+        background: var(--paper-warm);
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .upload-icon svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--ink-soft);
+        fill: none;
+        stroke-width: 1.5;
+      }
+      .upload-label {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--ink-soft);
+      }
+      .upload-hint {
+        font-size: 12px;
+        color: var(--ink-faint);
+        margin-top: 3px;
+      }
+      .preview-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .preview-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--border);
+      }
+      .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .preview-remove {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 22px;
+        height: 22px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        font-size: 11px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s;
+      }
+      .preview-remove:hover {
+        background: var(--red);
+      }
+      #successScreen {
+        display: none;
+      }
+      .success-mark {
+        width: 56px;
+        height: 56px;
+        background: var(--green);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+      }
+      .success-mark svg {
+        width: 26px;
+        height: 26px;
+        stroke: #fff;
+        fill: none;
+        stroke-width: 2.5;
+      }
+      .ticket-box {
+        background: var(--paper);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px 20px;
+        text-align: center;
+        margin: 20px 0;
+      }
+      .ticket-label {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--ink-faint);
+        margin-bottom: 8px;
+      }
+      .ticket-num {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--accent);
+        direction: ltr;
+      }
+      .ticket-hint {
+        font-size: 12px;
+        color: var(--ink-faint);
+        margin-top: 6px;
+      }
+      .info-panel {
+        background: var(--accent-light);
+        border-right: 3px solid var(--accent);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        font-size: 13px;
+        color: var(--accent);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+      .btn-telegram {
+        background: #0088cc;
+        color: #fff;
+        width: 100%;
+        padding: 14px;
+        font-size: 15px;
+        font-weight: 700;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: background 0.18s;
+        box-shadow: 0 2px 8px rgba(0, 136, 204, 0.25);
+      }
+      .btn-telegram:hover {
+        background: #0077b3;
+      }
+      #loaderOverlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(247, 246, 243, 0.92);
+        backdrop-filter: blur(4px);
+        z-index: 200;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 14px;
+      }
+      #loaderOverlay.active {
+        display: flex;
+      }
+      .loader-ring {
+        width: 36px;
+        height: 36px;
+        border: 3px solid var(--border);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.75s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .loader-text {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ink-soft);
+      }
+      #toastWrap {
+        position: fixed;
+        top: 16px;
+        right: 50%;
+        transform: translateX(50%);
+        z-index: 300;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: calc(100% - 32px);
+        max-width: 420px;
+      }
+      .toast {
+        padding: 12px 16px;
+        border-radius: var(--radius);
+        font-size: 13.5px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: var(--shadow-lg);
+        animation: toastIn 0.25s ease forwards;
+        border: 1px solid;
+      }
+      .toast-success {
+        background: var(--green-light);
+        color: var(--green);
+        border-color: rgba(29, 106, 71, 0.2);
+      }
+      .toast-error {
+        background: var(--red-light);
+        color: var(--red);
+        border-color: rgba(139, 26, 26, 0.2);
+      }
+      .toast-warning {
+        background: var(--gold-light);
+        color: var(--gold);
+        border-color: rgba(184, 134, 11, 0.2);
+      }
+      .toast-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .toast-success .toast-dot {
+        background: var(--green);
+      }
+      .toast-error .toast-dot {
+        background: var(--red);
+      }
+      .toast-warning .toast-dot {
+        background: var(--gold);
+      }
+      @keyframes toastIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .section-label {
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--ink-faint);
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+      }
+      .new-link {
+        display: block;
+        text-align: center;
+        font-size: 13px;
+        color: var(--ink-faint);
+        margin-top: 18px;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        background: none;
+        border: none;
+        font-family: inherit;
+      }
+      .new-link:hover {
+        color: var(--ink-soft);
+      }
+      @media (max-width: 480px) {
+        .card-body {
+          padding: 22px 18px;
+        }
+        .card-head {
+          padding: 18px 18px 14px;
+        }
+        .header-inner {
+          padding: 14px 18px;
+        }
+      }
     </style>
   </head>
-  <body class="antialiased">
-    <div id="loaderOverlay" class="fixed inset-0 bg-white/95 z-50 hidden flex-col items-center justify-center backdrop-blur-sm">
-      <div class="w-10 h-10 border-2 border-slate-200 border-t-emerald-700 rounded-full animate-spin mb-4"></div>
-      <p id="loaderText" class="font-bold text-slate-600 text-sm">جاري المعالجة...</p>
+  <body>
+    <div id="loaderOverlay">
+      <div class="loader-ring"></div>
+      <p class="loader-text" id="loaderText">جاري المعالجة...</p>
     </div>
-    <div id="toastContainer" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm pointer-events-none flex flex-col gap-2"></div>
 
-    <header class="app-header text-white pt-12 px-6 text-center">
-      <h1 class="text-2xl font-extrabold mb-1 tracking-tight">بلدية نابلس</h1>
-      <p class="text-emerald-100 font-medium text-xs opacity-90">النظام الإلكتروني الموحد للشكاوى</p>
+    <div id="toastWrap"></div>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-emblem">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="rgba(255,255,255,0.9)"
+          >
+            <path
+              d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.3l7 3.9v8.6l-7 3.9-7-3.9V8.2l7-3.9z"
+            />
+          </svg>
+        </div>
+        <div>
+          <div class="header-title">بلدية نابلس</div>
+          <div class="header-subtitle">منصة الشكاوى الإلكترونية</div>
+        </div>
+      </div>
     </header>
 
-    <main class="max-w-md mx-auto px-5 -mt-8 relative z-10 pb-12">
-      <div id="formScreen" class="glass-card p-6 md:p-8">
-        <div class="mb-5">
-          <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">رقم الهاتف</label>
-          <input id="phoneInput" type="tel" placeholder="059xxxxxxx" class="form-input text-left dir-ltr" style="direction: ltr" />
-        </div>
-
-        <div class="mb-5">
-          <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">تصنيف المشكلة</label>
-          <select id="problemType" class="form-input appearance-none bg-white cursor-pointer">
-            <option value="" disabled selected>اختر التصنيف...</option>
-            <option value="طرق">تعبيد وتأهيل طرق</option>
-            <option value="مياه">مياه وصرف صحي</option>
-            <option value="نفايات">نظافة ونفايات</option>
-            <option value="إنارة">إنارة الشوارع</option>
-            <option value="أخرى">أخرى</option>
-          </select>
-        </div>
-
-        <div class="mb-5">
-          <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">تفاصيل المشكلة</label>
-          <textarea id="description" rows="3" placeholder="وصف المشكلة بوضوح..." class="form-input resize-none"></textarea>
-        </div>
-
-        <div class="mb-5 p-4 bg-slate-50 border border-slate-100 rounded-lg">
-          <label class="block text-xs font-bold text-slate-500 mb-3 uppercase tracking-wide">موقع المشكلة</label>
-          <button id="gpsBtn" onclick="getLocation()" class="w-full bg-white border border-emerald-600 text-emerald-700 hover:bg-emerald-50 font-bold rounded-md px-4 py-2.5 transition-all mb-3 text-sm">
-            <span id="gpsBtnText">تحديد موقعي الجغرافي</span>
-          </button>
-          <div id="locationDisplay" class="hidden text-xs text-emerald-700 font-bold text-center mb-3 bg-emerald-50 py-2 rounded border border-emerald-100"></div>
-          <input id="manualLocationInput" type="text" placeholder="العنوان بالتفصيل..." class="form-input text-sm py-2" />
-        </div>
-
-        <div class="mb-8">
-          <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">المرفقات</label>
-          <div class="relative">
-            <input id="photoInput" type="file" accept="image/*" multiple onchange="handleFiles(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-            <div class="w-full border border-dashed border-slate-300 rounded-lg p-3 text-center bg-slate-50 hover:bg-slate-100 transition-colors">
-               <span class="text-sm font-bold text-slate-600">إضافة صور (اختياري)</span>
-            </div>
+    <main class="main-wrap">
+      <div id="formScreen">
+        <div class="card">
+          <div class="card-head">
+            <h2>تقديم شكوى جديدة</h2>
+            <p>أدخل البيانات بدقة لضمان المتابعة السريعة</p>
           </div>
-          <div id="previewGrid" class="grid grid-cols-4 gap-2 mt-3 hidden"></div>
-        </div>
+          <div class="card-body">
+            <p class="section-label">بيانات التواصل</p>
+            <div class="field">
+              <label for="phoneInput">رقم الهاتف</label>
+              <input
+                id="phoneInput"
+                type="tel"
+                placeholder="059xxxxxxx"
+                style="direction: ltr"
+                inputmode="tel"
+              />
+              <p class="field-hint">
+                يُستخدم لمتابعة الشكوى وإشعارك عبر تيليجرام
+              </p>
+            </div>
 
-        <button id="submitBtn" onclick="submitComplaint()" class="btn-primary text-sm flex items-center justify-center gap-2">إرسال الطلب</button>
+            <div class="divider"></div>
+            <p class="section-label">تفاصيل المشكلة</p>
+
+            <div class="field">
+              <label for="problemType">نوع المشكلة</label>
+              <div class="select-wrap">
+                <select id="problemType">
+                  <option value="" disabled selected>اختر التصنيف</option>
+                  <option value="طرق">تعبيد وتأهيل الطرق</option>
+                  <option value="مياه">مياه وصرف صحي</option>
+                  <option value="نفايات">نظافة ونفايات</option>
+                  <option value="إنارة">إنارة الشوارع</option>
+                  <option value="أخرى">أخرى</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="description">وصف المشكلة</label>
+              <textarea
+                id="description"
+                rows="4"
+                placeholder="اشرح المشكلة بوضوح وتفاصيل كافية..."
+              ></textarea>
+              <p class="field-hint">10 أحرف على الأقل</p>
+            </div>
+
+            <div class="divider"></div>
+            <p class="section-label">موقع المشكلة</p>
+
+            <div class="field">
+              <div class="location-success" id="locationSuccess">
+                <div class="location-dot"></div>
+                <span>تم تحديد الموقع الجغرافي بنجاح</span>
+              </div>
+              <button
+                type="button"
+                class="btn btn-ghost"
+                id="gpsBtn"
+                onclick="getLocation()"
+                style="margin-bottom: 10px"
+              >
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                >
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                </svg>
+                <span id="gpsBtnText">تحديد موقعي الجغرافي</span>
+              </button>
+              <input
+                id="manualLocationInput"
+                type="text"
+                placeholder="أو أدخل العنوان يدوياً..."
+              />
+            </div>
+
+            <div class="divider"></div>
+            <p class="section-label">المرفقات — اختياري</p>
+
+            <div class="field">
+              <div class="upload-zone" id="uploadZone">
+                <input
+                  id="photoInput"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onchange="handleFiles(event)"
+                />
+                <div class="upload-icon">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"
+                    />
+                  </svg>
+                </div>
+                <p class="upload-label">انقر أو اسحب الصور هنا</p>
+                <p class="upload-hint">الحد الأقصى 4 صور — JPG، PNG</p>
+              </div>
+              <div
+                class="preview-grid"
+                id="previewGrid"
+                style="display: none"
+              ></div>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="submitComplaint()"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+              >
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+              إرسال الشكوى
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div id="successScreen" class="glass-card p-8 hidden flex-col items-center justify-center text-center">
-        <h2 class="text-xl font-extrabold text-slate-800 mb-1">تم إرسال الطلب</h2>
-        <p class="text-slate-500 text-sm font-medium mb-6">رمز المتابعة: <br><span id="ticketDisplay" class="text-lg text-emerald-700 font-extrabold dir-ltr inline-block mt-1 tracking-widest"></span></p>
-        <div class="w-full h-px bg-slate-100 mb-6"></div>
-        <p class="text-xs font-bold text-slate-500 mb-3">لمتابعة التطورات وتلقي التحديثات الآلية:</p>
-        <a id="telegramLink" href="#" target="_blank" class="w-full bg-[#0088cc] text-white hover:bg-[#0077b3] px-6 py-3 rounded-md font-bold transition-colors text-sm">
-          متابعة الطلب عبر تيليجرام
-        </a>
-        <button onclick="location.reload()" class="mt-6 text-slate-400 text-xs font-bold hover:text-slate-600 transition-colors">تقديم طلب جديد</button>
+      <div id="successScreen">
+        <div class="card">
+          <div class="card-body" style="text-align: center; padding: 40px 26px">
+            <div class="success-mark">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px">
+              تم استلام شكواك
+            </h2>
+            <p
+              style="font-size: 14px; color: var(--ink-faint); margin-bottom: 0"
+            >
+              سيتم مراجعتها من قِبل الفريق المختص
+            </p>
+            <div class="ticket-box">
+              <p class="ticket-label">رمز المتابعة</p>
+              <p class="ticket-num" id="ticketDisplay">NBL-XXXXXX</p>
+              <p class="ticket-hint">احتفظ بهذا الرمز</p>
+            </div>
+            <div class="info-panel" style="text-align: right">
+              يمكنك متابعة حالة شكواك وتلقي إشعارات فورية عند كل تحديث عبر
+              تيليجرام.
+            </div>
+            <a
+              id="telegramLink"
+              href="#"
+              target="_blank"
+              class="btn-telegram"
+              style="margin-bottom: 12px"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <path
+                  d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.03 9.562c-.15.677-.543.842-1.1.524l-3.04-2.24-1.467 1.41c-.162.162-.298.298-.61.298l.218-3.088 5.626-5.082c.245-.218-.053-.34-.38-.122l-6.953 4.376-2.996-.936c-.652-.204-.664-.652.136-.965l11.7-4.511c.544-.196 1.02.133.896.774z"
+                />
+              </svg>
+              متابعة الشكوى على تيليجرام
+            </a>
+            <button class="new-link" onclick="location.reload()">
+              تقديم شكوى جديدة
+            </button>
+          </div>
+        </div>
       </div>
     </main>
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-      import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        serverTimestamp,
+      } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyA3cYiWTMJQY-15uR3MRlahNFltcwFoWeM",
@@ -99,163 +792,254 @@
         messagingSenderId: "910333293460",
         appId: "1:910333293460:web:4e06dbd84dba39c078d581",
       };
-      
+
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
-
       const IMGBB_KEY = "b33aa37db420efccaaed4067e2b41b20";
-      const BOT_USERNAME = "shakaweebot"; 
-
       let userLocation = null;
       let selectedFiles = [];
 
       window.getLocation = function () {
         const btn = document.getElementById("gpsBtn");
-        const text = document.getElementById("gpsBtnText");
-        const display = document.getElementById("locationDisplay");
-        text.textContent = "جاري التحديد...";
+        const btnText = document.getElementById("gpsBtnText");
+        btnText.textContent = "جاري التحديد...";
         btn.disabled = true;
-
-        if (!navigator.geolocation) { showToast("المتصفح لا يدعم التحديد", "error"); resetGpsBtn(); return; }
-
+        if (!navigator.geolocation) {
+          showToast("المتصفح لا يدعم تحديد الموقع", "error");
+          resetGps();
+          return;
+        }
         navigator.geolocation.getCurrentPosition(
           (pos) => {
-            userLocation = { lat: pos.coords.latitude.toFixed(6), lng: pos.coords.longitude.toFixed(6) };
-            display.textContent = "تم التحديد بنجاح"; display.classList.remove("hidden");
-            text.textContent = "تم التحديد";
-            btn.classList.replace("border-emerald-600", "border-emerald-200");
-            btn.classList.replace("text-emerald-700", "text-emerald-600");
-            btn.disabled = false;
+            userLocation = {
+              lat: pos.coords.latitude.toFixed(6),
+              lng: pos.coords.longitude.toFixed(6),
+            };
+            document.getElementById("locationSuccess").classList.add("visible");
+            btnText.textContent = "تم التحديد";
+            btn.style.opacity = "0.6";
           },
-          () => { showToast("تعذّر تحديد الموقع", "error"); resetGpsBtn(); },
-          { enableHighAccuracy: true, timeout: 10000 }
+          () => {
+            showToast("تعذّر تحديد الموقع — أدخل العنوان يدوياً", "warning");
+            resetGps();
+          },
+          { enableHighAccuracy: true, timeout: 10000 },
         );
       };
 
-      function resetGpsBtn() {
+      function resetGps() {
+        document.getElementById("gpsBtnText").textContent =
+          "تحديد موقعي الجغرافي";
         const btn = document.getElementById("gpsBtn");
-        document.getElementById("gpsBtnText").textContent = "تحديد موقعي الجغرافي";
-        btn.classList.remove("border-emerald-200", "text-emerald-600");
-        btn.classList.add("border-emerald-600", "text-emerald-700");
         btn.disabled = false;
+        btn.style.opacity = "1";
       }
 
-      window.handleFiles = function (event) {
-        const files = Array.from(event.target.files);
-        if (selectedFiles.length + files.length > 4) { showToast("الحد الأقصى 4 صور", "warning"); return; }
+      window.handleFiles = function (e) {
+        const files = Array.from(e.target.files);
+        if (selectedFiles.length + files.length > 4) {
+          showToast("الحد الأقصى 4 صور", "warning");
+          return;
+        }
         selectedFiles = [...selectedFiles, ...files].slice(0, 4);
         renderPreviews();
       };
 
-      window.removeFile = function (index) {
-        selectedFiles.splice(index, 1);
+      window.removeFile = function (i) {
+        selectedFiles.splice(i, 1);
         document.getElementById("photoInput").value = "";
         renderPreviews();
       };
 
       function renderPreviews() {
         const grid = document.getElementById("previewGrid");
-        if (selectedFiles.length === 0) { grid.classList.add("hidden"); return; }
-        grid.classList.remove("hidden");
-        grid.innerHTML = selectedFiles.map((file, i) => {
-            const url = URL.createObjectURL(file);
-            return `<div class="relative rounded overflow-hidden border border-slate-200 aspect-square">
-                  <img src="${url}" class="w-full h-full object-cover" />
-                  <button onclick="removeFile(${i})" class="absolute top-1 right-1 bg-white/90 text-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xs backdrop-blur-sm">✕</button>
-                </div>`;
-          }).join("");
+        if (!selectedFiles.length) {
+          grid.style.display = "none";
+          return;
+        }
+        grid.style.display = "grid";
+        grid.innerHTML = selectedFiles
+          .map((f, i) => {
+            const url = URL.createObjectURL(f);
+            return `<div class="preview-item"><img src="${url}" alt="معاينة" /><button class="preview-remove" onclick="removeFile(${i})">x</button></div>`;
+          })
+          .join("");
       }
 
       async function compressImage(file) {
         return new Promise((resolve) => {
-          const reader = new FileReader(); reader.readAsDataURL(file);
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
           reader.onload = (e) => {
-            const img = new Image(); img.src = e.target.result;
+            const img = new Image();
+            img.src = e.target.result;
             img.onload = () => {
               const canvas = document.createElement("canvas");
-              const MAX_SIZE = 1000; let width = img.width; let height = img.height;
-              if (width > height && width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; } 
-              else if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
-              canvas.width = width; canvas.height = height;
-              const ctx = canvas.getContext("2d"); ctx.drawImage(img, 0, 0, width, height);
-              canvas.toBlob((blob) => resolve(new File([blob], file.name, { type: "image/jpeg" })), "image/jpeg", 0.7);
+              const MAX = 1000;
+              let w = img.width,
+                h = img.height;
+              if (w > h && w > MAX) {
+                h *= MAX / w;
+                w = MAX;
+              } else if (h > MAX) {
+                w *= MAX / h;
+                h = MAX;
+              }
+              canvas.width = w;
+              canvas.height = h;
+              canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+              canvas.toBlob(
+                (blob) =>
+                  resolve(new File([blob], file.name, { type: "image/jpeg" })),
+                "image/jpeg",
+                0.75,
+              );
             };
           };
         });
       }
 
       async function uploadToImgBB(file) {
-        const formData = new FormData(); formData.append("image", file);
-        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: formData });
+        const fd = new FormData();
+        fd.append("image", file);
+        const res = await fetch(
+          `https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`,
+          { method: "POST", body: fd },
+        );
         const data = await res.json();
         if (!data.success) throw new Error("فشل الرفع");
         return data.data.url;
       }
 
-      window.submitComplaint = async function () {
-        const fullPhone = document.getElementById("phoneInput").value.trim();
+      function validateForm() {
+        const phone = document.getElementById("phoneInput").value.trim();
         const type = document.getElementById("problemType").value;
         const desc = document.getElementById("description").value.trim();
-        const manualLoc = document.getElementById("manualLocationInput").value.trim();
+        const manualLoc = document
+          .getElementById("manualLocationInput")
+          .value.trim();
+        if (!phone || phone.length < 10) {
+          showToast("أدخل رقم هاتف صحيح", "warning");
+          return false;
+        }
+        if (!type) {
+          showToast("اختر تصنيف المشكلة", "warning");
+          return false;
+        }
+        if (!desc || desc.length < 10) {
+          showToast("أدخل وصفاً للمشكلة (10 أحرف على الأقل)", "warning");
+          return false;
+        }
+        if (!userLocation && !manualLoc) {
+          showToast("حدد الموقع أو أدخل العنوان", "warning");
+          return false;
+        }
+        return true;
+      }
 
-        if (!fullPhone || !type) { showToast("يرجى تعبئة الحقول الأساسية", "warning"); return; }
-        if (!userLocation && !manualLoc) { showToast("يرجى تحديد الموقع", "warning"); return; }
-
-        const uniqueString = Date.now().toString(36).toUpperCase() + Math.floor(Math.random() * 1000);
-        const generatedTicketId = "NBL-" + uniqueString.slice(-6);
-
+      window.submitComplaint = async function () {
+        if (!validateForm()) return;
+        const phone = document.getElementById("phoneInput").value.trim();
+        const type = document.getElementById("problemType").value;
+        const desc = document.getElementById("description").value.trim();
+        const manualLoc = document
+          .getElementById("manualLocationInput")
+          .value.trim();
+        const ticketId =
+          "NBL-" + Date.now().toString(36).toUpperCase().slice(-6);
         try {
-          if (selectedFiles.length > 0) showLoader("جاري رفع المرفقات...");
-          else showLoader("جاري حفظ البيانات...");
-
+          showLoader(
+            selectedFiles.length > 0
+              ? "جاري رفع المرفقات..."
+              : "جاري حفظ البيانات...",
+          );
           const uploadedUrls = [];
           for (const file of selectedFiles) {
             const compressed = await compressImage(file);
             const url = await uploadToImgBB(compressed);
             uploadedUrls.push(url);
           }
-
-          document.getElementById("loaderText").textContent = "جاري الاعتماد...";
-          
-          await setDoc(doc(db, "complaints", generatedTicketId), {
-            phone: fullPhone,
-            type: type,
+          showLoader("جاري حفظ الطلب...");
+          await setDoc(doc(db, "complaints", ticketId), {
+            ticketId,
+            phone,
+            type,
             description: desc,
             location: {
-              mapUrl: userLocation ? `https://maps.google.com/?q=${userLocation.lat},${userLocation.lng}` : null,
+              mapUrl: userLocation
+                ? `https://maps.google.com/?q=${userLocation.lat},${userLocation.lng}`
+                : null,
               manual: manualLoc,
+              lat: userLocation?.lat || null,
+              lng: userLocation?.lng || null,
             },
-            imageUrl: uploadedUrls.join(","),
+            imageUrls: uploadedUrls,
             status: "مستلمة وجديدة",
-            ticketId: generatedTicketId,
-            telegramChatId: null,
-            createdAt: serverTimestamp()
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
           });
-
           hideLoader();
-          document.getElementById("formScreen").classList.add("hidden");
-          document.getElementById("successScreen").classList.remove("hidden");
-          document.getElementById("successScreen").classList.add("flex");
-          
-          document.getElementById("ticketDisplay").textContent = generatedTicketId;
-          document.getElementById("telegramLink").href = `https://t.me/${BOT_USERNAME}?start=${generatedTicketId}`;
+          showSuccessScreen(ticketId, phone);
         } catch (err) {
           hideLoader();
-          showToast("حدث خطأ أثناء الاتصال بالنظام", "error");
+          console.error(err);
+          showToast("حدث خطأ أثناء الإرسال — حاول مجدداً", "error");
         }
       };
 
-      function showLoader(text) { document.getElementById("loaderText").textContent = text; document.getElementById("loaderOverlay").style.display = "flex"; }
-      function hideLoader() { document.getElementById("loaderOverlay").style.display = "none"; }
-      window.showToast = function (message, type) {
-        const colors = { success: "bg-emerald-600", error: "bg-red-600", warning: "bg-amber-500" };
-        const toast = document.createElement("div");
-        toast.className = `pointer-events-auto ${colors[type]} text-white rounded px-4 py-3 shadow-md text-sm font-bold text-center transform transition-all duration-300 translate-y-[-20px] opacity-0`;
-        toast.textContent = message;
-        document.getElementById("toastContainer").appendChild(toast);
-        requestAnimationFrame(() => toast.classList.remove("translate-y-[-20px]", "opacity-0"));
-        setTimeout(() => { toast.classList.add("opacity-0", "translate-y-[-20px]"); setTimeout(() => toast.remove(), 300); }, 3000);
+      function showLoader(text) {
+        document.getElementById("loaderText").textContent =
+          text || "جاري المعالجة...";
+        document.getElementById("loaderOverlay").classList.add("active");
+      }
+      function hideLoader() {
+        document.getElementById("loaderOverlay").classList.remove("active");
+      }
+
+      function showSuccessScreen(ticketId, phone) {
+        document.getElementById("formScreen").style.display = "none";
+        document.getElementById("successScreen").style.display = "block";
+        document.getElementById("ticketDisplay").textContent = ticketId;
+        document.getElementById("telegramLink").href =
+          `https://t.me/shakaweebot?start=complaint_${ticketId}_${phone}`;
+      }
+
+      window.showToast = function (msg, type) {
+        const wrap = document.getElementById("toastWrap");
+        const t = document.createElement("div");
+        const cls =
+          type === "error"
+            ? "toast-error"
+            : type === "warning"
+              ? "toast-warning"
+              : "toast-success";
+        t.className = `toast ${cls}`;
+        t.innerHTML = `<span class="toast-dot"></span><span>${msg}</span>`;
+        wrap.appendChild(t);
+        setTimeout(() => t.remove(), 4000);
       };
+
+      const zone = document.getElementById("uploadZone");
+      zone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        zone.classList.add("dragover");
+      });
+      zone.addEventListener("dragleave", () =>
+        zone.classList.remove("dragover"),
+      );
+      zone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        zone.classList.remove("dragover");
+        const files = Array.from(e.dataTransfer.files).filter((f) =>
+          f.type.startsWith("image/"),
+        );
+        if (selectedFiles.length + files.length > 4) {
+          showToast("الحد الأقصى 4 صور", "warning");
+          return;
+        }
+        selectedFiles = [...selectedFiles, ...files].slice(0, 4);
+        renderPreviews();
+      });
     </script>
   </body>
 </html>

@@ -6,185 +6,981 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>لوحة الإدارة | تحديث الشكاوى</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>لوحة الإدارة | بلدية نابلس</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
+      :root {
+        --ink: #0d1117;
+        --ink-soft: #3d4451;
+        --ink-faint: #8892a4;
+        --paper: #f7f6f3;
+        --paper-warm: #eeebe4;
+        --accent: #1a4a6b;
+        --accent-mid: #2d6e9e;
+        --accent-light: #d8eaf5;
+        --gold: #b8860b;
+        --gold-light: #f5edd0;
+        --green: #1d6a47;
+        --green-light: #d1eedf;
+        --amber: #92400e;
+        --amber-light: #fef3c7;
+        --red: #8b1a1a;
+        --red-light: #fde8e8;
+        --border: rgba(13, 17, 23, 0.09);
+        --shadow-sm: 0 1px 4px rgba(13, 17, 23, 0.06);
+        --shadow-md: 0 4px 16px rgba(13, 17, 23, 0.08);
+        --shadow-lg: 0 12px 40px rgba(13, 17, 23, 0.12);
+        --radius: 4px;
+        --radius-lg: 8px;
+        --sidebar: 240px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
       body {
-        font-family: "Tajawal", sans-serif;
-        background-color: #f8fafc;
-        color: #0f172a;
+        font-family: "IBM Plex Sans Arabic", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        font-size: 14px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
       }
-      .stat-card {
-        background: #ffffff;
-        border-radius: 0.75rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        border: 1px solid #e2e8f0;
+
+      /* ── TOPBAR ── */
+      .topbar {
+        background: var(--accent);
+        color: #fff;
+        border-bottom: 3px solid var(--gold);
+        position: sticky;
+        top: 0;
+        z-index: 50;
       }
-      .ticket-card {
-        background: #ffffff;
-        border-radius: 0.75rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-        border: 1px solid #e2e8f0;
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 28px;
+        gap: 16px;
       }
-      ::-webkit-scrollbar {
-        width: 6px;
+      .topbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
       }
-      ::-webkit-scrollbar-track {
-        background: transparent;
+      .topbar-emblem {
+        width: 34px;
+        height: 34px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
       }
-      ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 10px;
+      .topbar-title {
+        font-size: 15px;
+        font-weight: 700;
       }
-      .custom-file-upload {
-        display: inline-block;
+      .topbar-sub {
+        font-size: 11.5px;
+        color: rgba(255, 255, 255, 0.55);
+        margin-top: 1px;
+      }
+      .live-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 5px 12px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .live-dot {
+        width: 7px;
+        height: 7px;
+        background: #4ade80;
+        border-radius: 50%;
+        animation: pulse 2s ease infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      /* ── STATS BAR ── */
+      .stats-bar {
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0 28px;
+      }
+      .stats-inner {
+        display: flex;
+        gap: 0;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .stat {
+        padding: 18px 28px 16px;
+        border-left: 1px solid var(--border);
+        min-width: 140px;
+      }
+      .stat:last-child {
+        border-left: none;
+      }
+      .stat-val {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--ink);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+      .stat-val.blue {
+        color: var(--accent);
+      }
+      .stat-val.amber {
+        color: var(--amber);
+      }
+      .stat-val.green {
+        color: var(--green);
+      }
+      .stat-key {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--ink-faint);
+      }
+      .stat-bar-accent {
+        height: 3px;
+        background: var(--border);
+        border-radius: 0;
+        margin-top: 10px;
+      }
+      .stat-bar-fill {
+        height: 100%;
+        border-radius: 2px;
+        transition: width 0.5s ease;
+      }
+      .fill-blue {
+        background: var(--accent);
+      }
+      .fill-amber {
+        background: #f59e0b;
+      }
+      .fill-green {
+        background: var(--green);
+      }
+
+      /* ── TOOLBAR ── */
+      .toolbar {
+        padding: 18px 28px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        border-bottom: 1px solid var(--border);
+        background: #fafaf9;
+        position: sticky;
+        top: 75px;
+        z-index: 40;
+      }
+      .search-wrap {
+        position: relative;
+        flex: 1;
+        min-width: 220px;
+      }
+      .search-wrap svg {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 15px;
+        height: 15px;
+        stroke: var(--ink-faint);
+        fill: none;
+        stroke-width: 2;
+        pointer-events: none;
+      }
+      .search-wrap input {
+        width: 100%;
+        padding: 10px 38px 10px 14px;
+        font-family: inherit;
+        font-size: 14px;
+        background: #fff;
+        color: var(--ink);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        outline: none;
+        transition:
+          border-color 0.18s,
+          box-shadow 0.18s;
+      }
+      .search-wrap input:focus {
+        border-color: var(--accent-mid);
+        box-shadow: 0 0 0 3px rgba(45, 110, 158, 0.12);
+      }
+      .search-wrap input::placeholder {
+        color: var(--ink-faint);
+      }
+      select.filter-sel {
+        padding: 10px 34px 10px 14px;
+        font-family: inherit;
+        font-size: 13.5px;
+        background: #fff;
+        color: var(--ink-soft);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        outline: none;
         cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238892a4' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: left 10px center;
+        transition: border-color 0.18s;
       }
-      select {
-        background-image: none;
+      select.filter-sel:focus {
+        border-color: var(--accent-mid);
+        outline: none;
+      }
+      .count-badge {
+        margin-right: auto;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--ink-faint);
+        white-space: nowrap;
+      }
+
+      /* ── CONTENT ── */
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px 28px 60px;
+      }
+
+      /* ── TICKET CARD ── */
+      .ticket-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 14px;
+        overflow: hidden;
+        transition:
+          box-shadow 0.18s,
+          border-color 0.18s;
+      }
+      .ticket-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: rgba(13, 17, 23, 0.15);
+      }
+
+      .ticket-card.new-ticket {
+        border-right: 3px solid var(--accent);
+      }
+      .ticket-card.processing-ticket {
+        border-right: 3px solid #f59e0b;
+      }
+      .ticket-card.done-ticket {
+        border-right: 3px solid var(--green);
+      }
+
+      .tc-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 16px 20px;
+        gap: 12px;
+        border-bottom: 1px solid var(--border);
+        background: #fafaf9;
+      }
+
+      .tc-id {
+        font-family: "IBM Plex Mono", "Courier New", monospace;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: 0.5px;
+        direction: ltr;
+        display: inline-block;
+      }
+
+      .tc-phone {
+        font-size: 12px;
+        color: var(--ink-faint);
+        margin-top: 3px;
+        direction: ltr;
+      }
+      .tc-date {
+        font-size: 12px;
+        color: var(--ink-faint);
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .pill-new {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+      .pill-new .status-dot {
+        background: var(--accent);
+      }
+      .pill-processing {
+        background: var(--amber-light);
+        color: var(--amber);
+      }
+      .pill-processing .status-dot {
+        background: #f59e0b;
+      }
+      .pill-done {
+        background: var(--green-light);
+        color: var(--green);
+      }
+      .pill-done .status-dot {
+        background: var(--green);
+      }
+
+      .tc-body {
+        padding: 16px 20px;
+      }
+
+      .tc-meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .meta-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink-soft);
+      }
+
+      .tc-desc {
+        font-size: 13.5px;
+        color: var(--ink-soft);
+        line-height: 1.6;
+        margin-bottom: 12px;
+      }
+
+      .tc-location {
+        font-size: 12.5px;
+        color: var(--ink-faint);
+        margin-bottom: 14px;
+      }
+      .tc-location a {
+        color: var(--accent-mid);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        font-weight: 600;
+      }
+
+      .tc-foot {
+        padding: 14px 20px;
+        border-top: 1px solid var(--border);
+        background: #fafaf9;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      select.status-sel {
+        flex: 1;
+        min-width: 180px;
+        padding: 9px 32px 9px 12px;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink-soft);
+        background: #fff;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238892a4' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: left 10px center;
+        transition: border-color 0.18s;
+      }
+      select.status-sel:focus {
+        border-color: var(--accent-mid);
+      }
+
+      .btn-update {
+        padding: 9px 18px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.18s;
+        white-space: nowrap;
+      }
+      .btn-update:hover {
+        background: #163d58;
+      }
+
+      .btn-delete {
+        padding: 9px 14px;
+        background: var(--red-light);
+        color: var(--red);
+        border: 1px solid rgba(139, 26, 26, 0.2);
+        border-radius: var(--radius);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.18s;
+      }
+      .btn-delete:hover {
+        background: #fccece;
+      }
+
+      .btn-images {
+        padding: 9px 14px;
+        background: transparent;
+        color: var(--accent-mid);
+        border: 1.5px solid var(--accent-mid);
+        border-radius: var(--radius);
+        font-family: inherit;
+        font-size: 12.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.18s;
+        white-space: nowrap;
+      }
+      .btn-images:hover {
+        background: var(--accent-light);
+      }
+
+      /* ── EMPTY / ERROR ── */
+      .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        color: var(--ink-faint);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      /* ── MODAL ── */
+      .modal-bg {
+        position: fixed;
+        inset: 0;
+        background: rgba(13, 17, 23, 0.65);
+        backdrop-filter: blur(6px);
+        z-index: 200;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .modal-bg.active {
+        display: flex;
+      }
+      .modal-box {
+        background: #fff;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        width: 100%;
+        max-width: 680px;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+      .modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        background: #fff;
+        z-index: 1;
+      }
+      .modal-head h3 {
+        font-size: 15px;
+        font-weight: 700;
+      }
+      .modal-close {
+        width: 32px;
+        height: 32px;
+        background: var(--paper-warm);
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        color: var(--ink-soft);
+        transition: background 0.15s;
+      }
+      .modal-close:hover {
+        background: var(--red-light);
+        color: var(--red);
+      }
+      .modal-body {
+        padding: 22px;
+      }
+      .img-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+      }
+      .img-item {
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        cursor: pointer;
+        transition: transform 0.15s;
+      }
+      .img-item:hover {
+        transform: scale(1.02);
+      }
+      .img-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* ── LOADER ── */
+      #loaderOverlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(247, 246, 243, 0.92);
+        backdrop-filter: blur(4px);
+        z-index: 300;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 14px;
+      }
+      #loaderOverlay.active {
+        display: flex;
+      }
+      .loader-ring {
+        width: 36px;
+        height: 36px;
+        border: 3px solid var(--border);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.75s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .loader-text {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ink-soft);
+      }
+
+      /* ── TOAST ── */
+      #toastWrap {
+        position: fixed;
+        top: 16px;
+        right: 50%;
+        transform: translateX(50%);
+        z-index: 400;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: calc(100% - 32px);
+        max-width: 400px;
+      }
+      .toast {
+        padding: 12px 16px;
+        border-radius: var(--radius);
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid;
+        animation: toastIn 0.25s ease forwards;
+      }
+      .t-success {
+        background: var(--green-light);
+        color: var(--green);
+        border-color: rgba(29, 106, 71, 0.2);
+      }
+      .t-error {
+        background: var(--red-light);
+        color: var(--red);
+        border-color: rgba(139, 26, 26, 0.2);
+      }
+      .t-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .t-success .t-dot {
+        background: var(--green);
+      }
+      .t-error .t-dot {
+        background: var(--red);
+      }
+      @keyframes toastIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── LOGIN ── */
+      #loginScreen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .login-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        padding: 40px 36px;
+        width: 100%;
+        max-width: 360px;
+      }
+      .login-logo {
+        width: 52px;
+        height: 52px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+      }
+      .login-logo svg {
+        fill: #fff;
+        width: 24px;
+        height: 24px;
+      }
+      .login-card h2 {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .login-card p {
+        text-align: center;
+        font-size: 13px;
+        color: var(--ink-faint);
+        margin-bottom: 28px;
+      }
+      .login-card label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--ink-soft);
+        margin-bottom: 7px;
+      }
+      .login-card input {
+        width: 100%;
+        padding: 11px 14px;
+        font-family: inherit;
+        font-size: 14px;
+        background: var(--paper);
+        color: var(--ink);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        outline: none;
+        margin-bottom: 16px;
+        transition:
+          border-color 0.18s,
+          box-shadow 0.18s;
+      }
+      .login-card input:focus {
+        border-color: var(--accent-mid);
+        box-shadow: 0 0 0 3px rgba(45, 110, 158, 0.12);
+      }
+      .login-btn {
+        width: 100%;
+        padding: 12px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius);
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.18s;
+      }
+      .login-btn:hover {
+        background: #163d58;
+      }
+      #dashboardScreen {
+        display: none;
+      }
+
+      @media (max-width: 700px) {
+        .topbar-inner {
+          padding: 12px 16px;
+        }
+        .stats-inner {
+          flex-wrap: wrap;
+        }
+        .stat {
+          min-width: 120px;
+          padding: 14px 16px 12px;
+        }
+        .toolbar {
+          padding: 14px 16px;
+          top: 66px;
+        }
+        .content {
+          padding: 16px 14px 60px;
+        }
+        .tc-head,
+        .tc-body,
+        .tc-foot {
+          padding: 14px 16px;
+        }
+        .tc-foot {
+          flex-direction: column;
+        }
+        .btn-update,
+        .btn-delete,
+        .btn-images {
+          width: 100%;
+        }
+        select.status-sel {
+          width: 100%;
+        }
       }
     </style>
   </head>
-  <body class="antialiased">
-    <div
-      id="loaderOverlay"
-      class="fixed inset-0 bg-white/80 z-50 hidden flex-col items-center justify-center backdrop-blur-sm"
-    >
-      <div
-        class="w-8 h-8 border-2 border-slate-200 border-t-emerald-700 rounded-full animate-spin mb-3"
-      ></div>
-      <p id="loaderText" class="font-bold text-emerald-800 text-sm">
-        جاري التحديث...
-      </p>
+  <body>
+    <!-- Loader -->
+    <div id="loaderOverlay">
+      <div class="loader-ring"></div>
+      <p class="loader-text" id="loaderText">جاري المعالجة...</p>
     </div>
 
-    <div
-      id="toastContainer"
-      class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm pointer-events-none flex flex-col gap-2"
-    ></div>
+    <!-- Toasts -->
+    <div id="toastWrap"></div>
 
-    <div
-      id="imageModal"
-      class="fixed inset-0 bg-slate-900/95 z-50 hidden flex-col items-center justify-center p-4 backdrop-blur-md"
-      onclick="closeModal()"
-    >
-      <button
-        class="absolute top-6 right-6 bg-white/10 hover:bg-white/20 text-white rounded-full w-10 h-10 flex items-center justify-center transition backdrop-blur"
-      >
-        ✕
-      </button>
-      <div
-        id="modalImagesContainer"
-        class="flex flex-col gap-4 overflow-y-auto w-full max-w-2xl max-h-[85vh] py-4"
-        onclick="event.stopPropagation()"
-      ></div>
+    <!-- Image Modal -->
+    <div class="modal-bg" id="imageModal">
+      <div class="modal-box">
+        <div class="modal-head">
+          <h3>صور الشكوى</h3>
+          <button class="modal-close" onclick="closeModal()">x</button>
+        </div>
+        <div class="modal-body">
+          <div class="img-grid" id="modalImgs"></div>
+        </div>
+      </div>
     </div>
 
-    <header
-      class="bg-white py-5 px-5 sticky top-0 z-40 border-b border-slate-200 shadow-sm flex justify-between items-center"
-    >
-      <div>
-        <h1 class="text-lg font-extrabold text-slate-800">
-          بوابة الإشراف والمتابعة
-        </h1>
-        <p class="text-xs text-slate-500 font-medium">بلدية نابلس</p>
+    <!-- LOGIN -->
+    <div id="loginScreen">
+      <div class="login-card">
+        <div class="login-logo">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.3l7 3.9v8.6l-7 3.9-7-3.9V8.2l7-3.9z"
+            />
+          </svg>
+        </div>
+        <h2>لوحة الإدارة</h2>
+        <p>بلدية نابلس — منصة الشكاوى</p>
+        <label for="adminPass">كلمة المرور</label>
+        <input
+          type="password"
+          id="adminPass"
+          placeholder="أدخل كلمة المرور"
+          onkeydown="if (event.key === 'Enter') doLogin();"
+        />
+        <button class="login-btn" onclick="doLogin()">الدخول</button>
       </div>
-      <span
-        class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-100 px-3 py-1.5 rounded-md font-bold flex items-center gap-2"
-      >
-        <span
-          class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"
-        ></span
-        >متصل
-      </span>
-    </header>
+    </div>
 
-    <main class="max-w-5xl mx-auto px-4 py-6">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        <div class="stat-card p-5 flex items-center justify-between">
-          <div>
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-wide">
-              إجمالي الطلبات
-            </p>
-            <p
-              id="totalCount"
-              class="text-2xl font-extrabold text-slate-800 mt-1"
-            >
-              —
-            </p>
+    <!-- DASHBOARD -->
+    <div id="dashboardScreen">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="topbar-brand">
+            <div class="topbar-emblem">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="rgba(255,255,255,0.9)"
+              >
+                <path
+                  d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.3l7 3.9v8.6l-7 3.9-7-3.9V8.2l7-3.9z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="topbar-title">لوحة الإدارة — بلدية نابلس</div>
+              <div class="topbar-sub">نظام إدارة الشكاوى الإلكترونية</div>
+            </div>
+          </div>
+          <div class="live-badge">
+            <div class="live-dot"></div>
+            <span>مباشر</span>
           </div>
         </div>
-        <div class="stat-card p-5 flex items-center justify-between">
-          <div>
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-wide">
-              طلبات جديدة
-            </p>
-            <p
-              id="newCount"
-              class="text-2xl font-extrabold text-emerald-600 mt-1"
-            >
-              —
-            </p>
+      </header>
+
+      <div class="stats-bar">
+        <div class="stats-inner">
+          <div class="stat">
+            <div class="stat-val blue" id="totalCount">—</div>
+            <div class="stat-key">إجمالي الشكاوى</div>
+            <div class="stat-bar-accent">
+              <div
+                class="stat-bar-fill fill-blue"
+                id="barTotal"
+                style="width: 100%"
+              ></div>
+            </div>
           </div>
-        </div>
-        <div class="stat-card p-5 flex items-center justify-between">
-          <div>
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-wide">
-              طلبات مكتملة
-            </p>
-            <p
-              id="completedCount"
-              class="text-2xl font-extrabold text-slate-800 mt-1"
-            >
-              —
-            </p>
+          <div class="stat">
+            <div class="stat-val blue" id="newCount">—</div>
+            <div class="stat-key">مستلمة وجديدة</div>
+            <div class="stat-bar-accent">
+              <div
+                class="stat-bar-fill fill-blue"
+                id="barNew"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat-val amber" id="processingCount">—</div>
+            <div class="stat-key">قيد المعالجة</div>
+            <div class="stat-bar-accent">
+              <div
+                class="stat-bar-fill fill-amber"
+                id="barProc"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat-val green" id="completedCount">—</div>
+            <div class="stat-key">مكتملة</div>
+            <div class="stat-bar-accent">
+              <div
+                class="stat-bar-fill fill-green"
+                id="barDone"
+                style="width: 0%"
+              ></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="mb-6 flex flex-col sm:flex-row gap-3">
-        <select
-          id="filterSelect"
-          class="border border-slate-200 rounded-lg px-4 py-3 text-sm font-bold focus:border-emerald-600 bg-white w-full sm:w-1/3 outline-none"
-        >
-          <option value="الكل">كافة التصنيفات</option>
+      <div class="toolbar">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="بحث برقم الشكوى أو الهاتف..."
+          />
+        </div>
+        <select class="filter-sel" id="filterSelect">
+          <option value="الكل">كل التصنيفات</option>
           <option value="طرق">طرق</option>
           <option value="مياه">مياه وصرف صحي</option>
-          <option value="نفايات">نفايات</option>
+          <option value="نفايات">نظافة ونفايات</option>
           <option value="إنارة">إنارة الشوارع</option>
           <option value="أخرى">أخرى</option>
         </select>
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="ابحث برمز المتابعة أو رقم الهاتف..."
-          class="border border-slate-200 rounded-lg px-4 py-3 text-sm font-medium focus:border-emerald-600 w-full sm:w-2/3 outline-none bg-white"
-        />
+        <select class="filter-sel" id="statusFilter">
+          <option value="الكل">كل الحالات</option>
+          <option value="مستلمة وجديدة">مستلمة وجديدة</option>
+          <option value="قيد المعالجة">قيد المعالجة</option>
+          <option value="تم الإنجاز والمتابعة (مكتملة)">مكتملة</option>
+        </select>
+        <span class="count-badge" id="countBadge">0 شكوى</span>
       </div>
 
-      <div id="cardsContainer" class="flex flex-col gap-4">
-        <div class="text-center py-16 text-sm font-bold text-slate-400">
-          جاري الاتصال...
+      <div class="content">
+        <div id="cardsContainer">
+          <div class="empty-state">جاري التحميل...</div>
         </div>
       </div>
-    </main>
+    </div>
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
       import {
         getFirestore,
         collection,
-        onSnapshot,
         doc,
         updateDoc,
         deleteDoc,
+        serverTimestamp,
         query,
         orderBy,
-        serverTimestamp,
+        onSnapshot,
       } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -198,383 +994,255 @@
 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
-      const TELEGRAM_TOKEN = "8756259726:AAFojt3xGhcB3uLXcahVdebZAtt7xgzl3zk";
-      const IMGBB_KEY = "b33aa37db420efccaaed4067e2b41b20";
 
+      const ADMIN_PASS = "nablus2024admin";
       let allComplaints = [];
 
-      const q = query(
-        collection(db, "complaints"),
-        orderBy("createdAt", "desc"),
-      );
-      onSnapshot(
-        q,
-        (snapshot) => {
-          allComplaints = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          updateStats();
-          applyFilters();
-        },
-        (error) => {
-          document.getElementById("cardsContainer").innerHTML =
-            '<div class="text-center bg-red-50 text-red-600 rounded-lg p-5 text-sm font-bold">تعذر الاتصال بقاعدة البيانات</div>';
-        },
-      );
+      // ── LOGIN ──
+      window.doLogin = function () {
+        const pass = document.getElementById("adminPass").value;
+        if (pass === ADMIN_PASS) {
+          document.getElementById("loginScreen").style.display = "none";
+          document.getElementById("dashboardScreen").style.display = "block";
+          initDashboard();
+        } else {
+          document.getElementById("adminPass").style.borderColor = "var(--red)";
+          document.getElementById("adminPass").style.boxShadow =
+            "0 0 0 3px rgba(139,26,26,0.12)";
+          setTimeout(() => {
+            document.getElementById("adminPass").style.borderColor = "";
+            document.getElementById("adminPass").style.boxShadow = "";
+          }, 1500);
+        }
+      };
 
-      function updateStats() {
-        document.getElementById("totalCount").textContent =
-          allComplaints.length;
-        document.getElementById("newCount").textContent = allComplaints.filter(
-          (c) => c.status === "مستلمة وجديدة",
-        ).length;
-        document.getElementById("completedCount").textContent =
-          allComplaints.filter(
-            (c) => c.status === "تم الإنجاز والمتابعة (مكتملة)",
-          ).length;
+      // ── INIT ──
+      function initDashboard() {
+        const q = query(
+          collection(db, "complaints"),
+          orderBy("createdAt", "desc"),
+        );
+        onSnapshot(
+          q,
+          (snap) => {
+            allComplaints = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+            updateStats();
+            applyFilters();
+          },
+          (err) => {
+            console.error(err);
+            document.getElementById("cardsContainer").innerHTML =
+              '<div class="empty-state" style="color:var(--red)">تعذّر الاتصال بقاعدة البيانات</div>';
+          },
+        );
+
+        document
+          .getElementById("searchInput")
+          .addEventListener("input", applyFilters);
+        document
+          .getElementById("filterSelect")
+          .addEventListener("change", applyFilters);
+        document
+          .getElementById("statusFilter")
+          .addEventListener("change", applyFilters);
       }
 
+      // ── STATS ──
+      function updateStats() {
+        const total = allComplaints.length;
+        const newC = allComplaints.filter(
+          (c) => c.status === "مستلمة وجديدة",
+        ).length;
+        const proc = allComplaints.filter(
+          (c) => c.status === "قيد المعالجة",
+        ).length;
+        const done = allComplaints.filter(
+          (c) => c.status === "تم الإنجاز والمتابعة (مكتملة)",
+        ).length;
+
+        document.getElementById("totalCount").textContent = total;
+        document.getElementById("newCount").textContent = newC;
+        document.getElementById("processingCount").textContent = proc;
+        document.getElementById("completedCount").textContent = done;
+
+        const pct = (v) => (total ? Math.round((v / total) * 100) + "%" : "0%");
+        document.getElementById("barNew").style.width = pct(newC);
+        document.getElementById("barProc").style.width = pct(proc);
+        document.getElementById("barDone").style.width = pct(done);
+      }
+
+      // ── FILTERS ──
       window.applyFilters = function () {
         const search = document
           .getElementById("searchInput")
           .value.trim()
           .toLowerCase();
         const filter = document.getElementById("filterSelect").value;
-        let filtered = allComplaints;
-        if (filter !== "الكل")
-          filtered = filtered.filter((c) => c.type === filter);
+        const statusF = document.getElementById("statusFilter").value;
+
+        let list = allComplaints;
+        if (filter !== "الكل") list = list.filter((c) => c.type === filter);
+        if (statusF !== "الكل") list = list.filter((c) => c.status === statusF);
         if (search)
-          filtered = filtered.filter(
+          list = list.filter(
             (c) =>
               (c.ticketId && c.ticketId.toLowerCase().includes(search)) ||
               (c.phone && c.phone.includes(search)),
           );
-        renderCards(filtered);
+
+        document.getElementById("countBadge").textContent =
+          `${list.length} شكوى`;
+        renderCards(list);
       };
 
-      document
-        .getElementById("filterSelect")
-        .addEventListener("change", applyFilters);
-      document
-        .getElementById("searchInput")
-        .addEventListener("input", applyFilters);
-
-      window.toggleCustomStatus = function (ticketId) {
-        const select = document.getElementById(`statusSelect-${ticketId}`);
-        const customInput = document.getElementById(`customStatus-${ticketId}`);
-        if (select.value === "custom") {
-          customInput.classList.remove("hidden");
-        } else {
-          customInput.classList.add("hidden");
-        }
-      };
-
-      window.handleRepairImageSelect = function (inputElement, ticketId) {
-        const fileNameSpan = document.getElementById(`fileName-${ticketId}`);
-        if (inputElement.files && inputElement.files[0]) {
-          fileNameSpan.textContent = "تم إرفاق الصورة";
-          fileNameSpan.classList.add("text-emerald-600");
-        } else {
-          fileNameSpan.textContent = "";
-          fileNameSpan.classList.remove("text-emerald-600");
-        }
-      };
-
-      // دالة الحذف الجديدة
-      window.deleteComplaint = async function (ticketId) {
-        if (
-          confirm(
-            "هل أنت متأكد من حذف هذا الطلب نهائياً؟ لا يمكن التراجع عن هذا الإجراء.",
-          )
-        ) {
-          showLoader();
-          try {
-            await deleteDoc(doc(db, "complaints", ticketId));
-            hideLoader();
-            showToast("تم حذف الطلب بنجاح", "success");
-          } catch (err) {
-            hideLoader();
-            showToast("حدث خطأ أثناء الحذف", "error");
-          }
-        }
-      };
-
-      window.processUpdate = async function (ticketId) {
-        const currentTicket = allComplaints.find(
-          (c) => c.ticketId === ticketId,
-        );
-        if (!currentTicket) return;
-
-        const select = document.getElementById(`statusSelect-${ticketId}`);
-        let statusValue = select.value;
-
-        if (statusValue === "custom") {
-          statusValue = document
-            .getElementById(`customStatus-${ticketId}`)
-            .value.trim();
-          if (!statusValue) {
-            showToast("يرجى كتابة الحالة المخصصة", "warning");
-            return;
-          }
-        }
-
-        const fileInput = document.getElementById(`repairImage-${ticketId}`);
-        showLoader();
-
-        try {
-          let repairImageUrl = null;
-          if (fileInput.files && fileInput.files[0]) {
-            const formData = new FormData();
-            formData.append("image", fileInput.files[0]);
-            const res = await fetch(
-              `https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`,
-              { method: "POST", body: formData },
-            );
-            const data = await res.json();
-            if (data.success) {
-              repairImageUrl = data.data.url;
-            }
-          }
-
-          let targetChatId = currentTicket.telegramChatId;
-
-          if (
-            !targetChatId ||
-            targetChatId === "null" ||
-            targetChatId === "undefined"
-          ) {
-            const linkedTicket = allComplaints.find(
-              (c) =>
-                c.phone === currentTicket.phone &&
-                c.telegramChatId &&
-                c.telegramChatId !== "null" &&
-                c.telegramChatId !== "undefined",
-            );
-            if (linkedTicket) {
-              targetChatId = linkedTicket.telegramChatId;
-            }
-          }
-
-          const updateData = {
-            status: statusValue,
-            updatedAt: serverTimestamp(),
-          };
-          if (repairImageUrl) updateData.repairImage = repairImageUrl;
-
-          if (targetChatId) updateData.telegramChatId = targetChatId;
-
-          await updateDoc(doc(db, "complaints", ticketId), updateData);
-
-          if (
-            targetChatId &&
-            targetChatId !== "undefined" &&
-            targetChatId !== "null"
-          ) {
-            const shortDesc = currentTicket.description
-              ? currentTicket.description.substring(0, 35) + "..."
-              : "بدون تفاصيل";
-            const msg = `تحديث على طلبك\n\nالتصنيف: ${currentTicket.type}\nالوصف: ${shortDesc}\nالرقم المرجعي: ${ticketId}\n\nالرد الإداري: ${statusValue}`;
-
-            if (repairImageUrl) {
-              await fetch(
-                `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`,
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    chat_id: targetChatId,
-                    photo: repairImageUrl,
-                    caption: msg,
-                  }),
-                },
-              );
-            } else {
-              await fetch(
-                `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ chat_id: targetChatId, text: msg }),
-                },
-              );
-            }
-          }
-
-          hideLoader();
-          showToast("تم الاعتماد بنجاح", "success");
-        } catch (err) {
-          hideLoader();
-          showToast("حدث خطأ", "error");
-        }
-      };
-
-      function renderCards(complaints) {
-        const container = document.getElementById("cardsContainer");
-        if (complaints.length === 0) {
-          container.innerHTML =
-            '<div class="text-center py-10 text-sm font-medium text-slate-400 border border-slate-200 rounded-lg">لا توجد بيانات</div>';
+      // ── RENDER ──
+      function renderCards(list) {
+        const con = document.getElementById("cardsContainer");
+        if (!list.length) {
+          con.innerHTML =
+            '<div class="empty-state">لا توجد شكاوى تطابق البحث</div>';
           return;
         }
 
-        container.innerHTML = complaints
+        con.innerHTML = list
           .map((c) => {
-            const dateObj = c.createdAt?.toDate();
-            const date = dateObj
-              ? dateObj.toLocaleDateString("ar-EG", {
+            const pillCls =
+              c.status === "مستلمة وجديدة"
+                ? "pill-new"
+                : c.status === "قيد المعالجة"
+                  ? "pill-processing"
+                  : "pill-done";
+            const cardCls =
+              c.status === "مستلمة وجديدة"
+                ? "new-ticket"
+                : c.status === "قيد المعالجة"
+                  ? "processing-ticket"
+                  : "done-ticket";
+            const dateStr = c.createdAt?.toDate?.()
+              ? new Date(c.createdAt.toDate()).toLocaleDateString("ar-EG", {
+                  year: "numeric",
                   month: "short",
                   day: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
                 })
-              : "";
-
-            const images = c.imageUrl
-              ? c.imageUrl.split(",").filter((url) => url.trim() !== "")
-              : [];
-            let imagesHtml = "";
-            if (images.length > 0) {
-              const extra =
-                images.length > 1
-                  ? `<div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">+${images.length - 1}</div>`
-                  : "";
-              imagesHtml = `
-            <div class="relative w-full sm:w-32 h-40 sm:h-full flex-shrink-0 cursor-pointer overflow-hidden border-b sm:border-b-0 sm:border-l border-slate-100" onclick="openModal('${images.join(",")}')">
-              <img src="${images[0]}" class="w-full h-full object-cover" />${extra}
-            </div>`;
-            }
-
-            let locElements = [];
-            if (c.location) {
-              if (c.location.manual)
-                locElements.push(
-                  `<span class="text-slate-600 bg-slate-50 px-2 py-1 rounded text-xs border border-slate-100">الموقع: ${c.location.manual}</span>`,
-                );
-              if (c.location.mapUrl)
-                locElements.push(
-                  `<a href="${c.location.mapUrl}" target="_blank" class="text-emerald-700 bg-emerald-50 px-2 py-1 rounded font-bold text-xs hover:bg-emerald-100 border border-emerald-100 transition-colors">الخريطة</a>`,
-                );
-            }
-
-            const repairImageBadge = c.repairImage
-              ? `<span class="mt-2 inline-block text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold cursor-pointer hover:bg-slate-200 border border-slate-200 transition-colors" onclick="openModal('${c.repairImage}')">عرض مرفق التحديث</span>`
-              : "";
-
-            const hasTelegram =
-              (c.telegramChatId && c.telegramChatId !== "null") ||
-              allComplaints.some(
-                (other) =>
-                  other.phone === c.phone &&
-                  other.telegramChatId &&
-                  other.telegramChatId !== "null",
-              );
-            const telegramBadge = hasTelegram
-              ? `<span class="text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded ml-2">مربوط بالتيليجرام</span>`
-              : "";
+              : "—";
+            const hasImgs = (c.imageUrls || []).length > 0;
 
             return `
-          <div class="ticket-card flex flex-col sm:flex-row overflow-hidden">
-            ${imagesHtml}
-            <div class="p-5 flex-1 flex flex-col justify-between">
+          <div class="ticket-card ${cardCls}">
+            <div class="tc-head">
               <div>
-                <div class="flex flex-wrap justify-between items-start mb-3 gap-2">
-                  <div class="flex flex-col gap-1">
-                    <div class="flex items-center gap-2">
-                      <span class="text-slate-800 font-extrabold text-sm dir-ltr tracking-wider">${c.ticketId}</span>
-                      <span class="text-emerald-700 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">${c.type}</span>
-                    </div>
-                    <div class="flex items-center mt-1">
-                      ${telegramBadge}
-                      <span class="text-xs text-slate-400 font-medium">${date}</span>
-                    </div>
-                  </div>
-                  <div class="text-xs font-bold text-slate-600 dir-ltr" style="direction:ltr; text-align:right;">${c.phone}</div>
-                </div>
-                <p class="text-slate-700 text-sm leading-relaxed mb-1">${c.description || "لا يوجد تفاصيل"}</p>
-                ${repairImageBadge}
+                <span class="tc-id">${c.ticketId || c.id}</span>
+                <div class="tc-phone">${c.phone || "—"}</div>
               </div>
-              
-              <div class="mt-4 pt-4 border-t border-slate-100 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-                <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">${locElements.join("")}</div>
-                
-                <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
-                   <div class="text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded px-2 py-1.5 w-full sm:w-auto text-center">
-                      الحالة: ${c.status || "جديدة"}
-                   </div>
-                   
-                   <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                       <select id="statusSelect-${c.ticketId}" onchange="toggleCustomStatus('${c.ticketId}')" class="text-xs border border-slate-200 rounded px-2 py-1.5 font-bold outline-none bg-white w-full sm:w-auto focus:border-emerald-600">
-                          <option value="قيد المراجعة الفنية">قيد المراجعة الفنية</option>
-                          <option value="قيد الكشف الميداني">قيد الكشف الميداني</option>
-                          <option value="تم التحويل للقسم المختص">تم التحويل للقسم المختص</option>
-                          <option value="بانتظار توفر المواد اللازمة">بانتظار توفر المواد اللازمة</option>
-                          <option value="جاري العمل والتنفيذ">جاري العمل والتنفيذ</option>
-                          <option value="تم الإنجاز والمتابعة (مكتملة)">تم الإنجاز (مكتملة)</option>
-                          <option value="مرفوضة لعدم الاختصاص">مرفوضة لعدم الاختصاص</option>
-                          <option value="custom">إدخال حالة مخصصة...</option>
-                       </select>
-                       <input type="text" id="customStatus-${c.ticketId}" placeholder="اكتب الحالة..." class="hidden text-xs border border-slate-200 rounded px-2 py-1.5 font-bold outline-none bg-white w-full sm:w-40 focus:border-emerald-600" />
-                   </div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+                <span class="status-pill ${pillCls}">
+                  <span class="status-dot"></span>${c.status}
+                </span>
+                <span class="tc-date">${dateStr}</span>
+              </div>
+            </div>
 
-                   <label class="custom-file-upload text-xs font-bold text-emerald-700 bg-white border border-emerald-200 px-2 py-1.5 rounded hover:bg-emerald-50 transition text-center w-full sm:w-auto">
-                      <input type="file" id="repairImage-${c.ticketId}" class="hidden" accept="image/*" onchange="handleRepairImageSelect(this, '${c.ticketId}')" />
-                      إرفاق صورة
-                   </label>
-                   
-                   <div class="flex gap-2 w-full sm:w-auto">
-                     <button onclick="processUpdate('${c.ticketId}')" class="flex-1 sm:flex-none bg-emerald-700 text-white hover:bg-emerald-800 px-4 py-1.5 rounded text-xs font-bold transition">
-                        تحديث
-                     </button>
-                     <button onclick="deleteComplaint('${c.ticketId}')" class="flex-1 sm:flex-none bg-white text-red-600 border border-red-200 hover:bg-red-50 px-3 py-1.5 rounded text-xs font-bold transition">
-                        حذف
-                     </button>
-                   </div>
-                   <div id="fileName-${c.ticketId}" class="w-full text-[10px] font-bold text-center mt-1 sm:hidden"></div>
-                </div>
+            <div class="tc-body">
+              <div class="tc-meta">
+                <span class="meta-chip">${c.type || "—"}</span>
+                ${hasImgs ? `<span class="meta-chip">${(c.imageUrls || []).length} صور</span>` : ""}
               </div>
+              <p class="tc-desc">${c.description || "لا يوجد وصف"}</p>
+              <p class="tc-location">
+                ${c.location?.manual ? c.location.manual : ""}
+                ${c.location?.mapUrl ? ` &mdash; <a href="${c.location.mapUrl}" target="_blank">عرض على الخريطة</a>` : ""}
+                ${!c.location?.manual && !c.location?.mapUrl ? "لم يحدد الموقع" : ""}
+              </p>
+            </div>
+
+            <div class="tc-foot">
+              <select class="status-sel" id="sel-${c.id}">
+                <option value="مستلمة وجديدة" ${c.status === "مستلمة وجديدة" ? "selected" : ""}>مستلمة وجديدة</option>
+                <option value="قيد المعالجة" ${c.status === "قيد المعالجة" ? "selected" : ""}>قيد المعالجة</option>
+                <option value="تم الإنجاز والمتابعة (مكتملة)" ${c.status === "تم الإنجاز والمتابعة (مكتملة)" ? "selected" : ""}>تم الإنجاز (مكتملة)</option>
+              </select>
+              <button class="btn-update" onclick="updateStatus('${c.id}')">حفظ</button>
+              ${hasImgs ? `<button class="btn-images" onclick="showImages('${c.id}')">الصور</button>` : ""}
+              <button class="btn-delete" onclick="deleteComplaint('${c.id}')">حذف</button>
             </div>
           </div>`;
           })
           .join("");
+
+        list.forEach((c) => {
+          window[`imgs_${c.id}`] = c.imageUrls || [];
+        });
       }
 
-      window.openModal = function (urlsString) {
-        if (!urlsString) return;
-        document.getElementById("modalImagesContainer").innerHTML = urlsString
-          .split(",")
+      // ── ACTIONS ──
+      window.updateStatus = async function (id) {
+        const newStatus = document.getElementById(`sel-${id}`).value;
+        showLoader("جاري التحديث...");
+        try {
+          await updateDoc(doc(db, "complaints", id), {
+            status: newStatus,
+            updatedAt: serverTimestamp(),
+          });
+          hideLoader();
+          showToast("تم تحديث الحالة بنجاح", "success");
+        } catch (e) {
+          hideLoader();
+          showToast("حدث خطأ أثناء التحديث", "error");
+          console.error(e);
+        }
+      };
+
+      window.deleteComplaint = async function (id) {
+        if (!confirm("هل أنت متأكد من حذف هذه الشكوى نهائياً؟")) return;
+        showLoader("جاري الحذف...");
+        try {
+          await deleteDoc(doc(db, "complaints", id));
+          hideLoader();
+          showToast("تم الحذف", "success");
+        } catch (e) {
+          hideLoader();
+          showToast("فشل الحذف", "error");
+          console.error(e);
+        }
+      };
+
+      window.showImages = function (id) {
+        const imgs = window[`imgs_${id}`] || [];
+        document.getElementById("modalImgs").innerHTML = imgs
           .map(
-            (url) =>
-              `<img src="${url}" class="w-full bg-white rounded-lg shadow-sm border border-slate-200" />`,
+            (u) =>
+              `<div class="img-item"><img src="${u}" alt="صورة" onclick="window.open('${u}','_blank')" /></div>`,
           )
           .join("");
-        document.getElementById("imageModal").style.display = "flex";
-        document.body.style.overflow = "hidden";
+        document.getElementById("imageModal").classList.add("active");
       };
 
       window.closeModal = function () {
-        document.getElementById("imageModal").style.display = "none";
-        document.body.style.overflow = "auto";
+        document.getElementById("imageModal").classList.remove("active");
       };
 
-      function showLoader() {
-        document.getElementById("loaderOverlay").style.display = "flex";
+      document.getElementById("imageModal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("imageModal")) closeModal();
+      });
+
+      // ── UI ──
+      function showLoader(text) {
+        document.getElementById("loaderText").textContent =
+          text || "جاري المعالجة...";
+        document.getElementById("loaderOverlay").classList.add("active");
       }
       function hideLoader() {
-        document.getElementById("loaderOverlay").style.display = "none";
+        document.getElementById("loaderOverlay").classList.remove("active");
       }
 
-      window.showToast = function (message, type) {
-        const colors = {
-          success: "bg-emerald-700",
-          error: "bg-red-600",
-          warning: "bg-amber-600",
-        };
-        const toast = document.createElement("div");
-        toast.className = `pointer-events-auto ${colors[type]} text-white rounded px-4 py-3 shadow-md text-xs font-bold text-center`;
-        toast.textContent = message;
-        document.getElementById("toastContainer").appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-      };
+      function showToast(msg, type) {
+        const wrap = document.getElementById("toastWrap");
+        const t = document.createElement("div");
+        t.className = `toast ${type === "error" ? "t-error" : "t-success"}`;
+        t.innerHTML = `<span class="t-dot"></span><span>${msg}</span>`;
+        wrap.appendChild(t);
+        setTimeout(() => t.remove(), 4000);
+      }
     </script>
   </body>
 </html>
